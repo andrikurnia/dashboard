@@ -6,12 +6,12 @@ define('APP_VER', '0.1');
 
 define('HOST', 'localhost');
 define('USERNAME', 'root');
-define('PASSWORD', '');
+define('PASSWORD', 'manabisa');
 define('DATABASE', 'dashboard');
 define('PREFIX', 'db_');
 
 
-define('URL', 'http://localhost/dashboard/');
+define('URL', 'http://andrikurnia.kd.io/dashboard/');
 define('LIBS', 'libs/');
 define('IMG_DIR', 'resources/img/');
 

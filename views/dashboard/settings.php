@@ -289,6 +289,11 @@
 			</div>
 			<?php break;
 		case '4':
+		    if(Session::get('conflict-username') != null) {
+		        echo '<div class="alert alert-danger no-radius">
+                	Username <b>'.Session::get('conflict-username').'</b> already in use 
+                </div>';
+		    }
 			?>
 			<div id="cs-setting" class="block">
 				<div class="menu">

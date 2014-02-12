@@ -12,30 +12,7 @@ class process extends Controller
 	}
 
 	function sendEmail() {
-		require LIBS.'CI_Email.php';
-		$email = new CI_Email();
 
-		$config['protocol']		= 'smtp';
-		$config['smtp_host']	= 'mop101.hostmop.com';
-		$config['smtp_user']	= 'cs@edu4indo.com';
-		$config['smtp_pass']	= 'edu4indo.com';
-		$config['smtp_port']	= '465';
-
-		$email->initialize($config);
-
-		echo phpversion();
-		$email->from('cs@edu4indo.com', 'Customer Service Edu4indo');
-		$email->to('andrikurnia@live.com');
-
-		$email->subject('Email Test');
-		$email->message('Testing the email class.');	// line 391
-
-		$email->send();
-
-		echo $email->print_debugger();
-		echo '<pre>';
-		print_r($_POST);
-		echo "</pre>";
 	}
 
 	// PROCESS DASHBOARD SETTINGS
@@ -63,8 +40,15 @@ class process extends Controller
 		// echo $tmp.'<br>';
 		// echo is_dir('config').'<br>';
 		// echo is_uploaded_file($tmp);
-		Database::executeS('INSERT INTO db_employee values(null, "'.$_POST['cs'].'","'.$_POST['pass'].'","'.$rm.'","2","0")');
-		move_uploaded_file($tmp, IMG_DIR.'users/'.$rm);
+		
+		# Check Username
+		$user = Database::executeS('SELECT * FROM db_employee WHERE username = "'.$_POST['cs'].'"');
+		if(count($user)) {
+		    Session::set('conflict-username', $_POST['cs']);
+		} else {
+		    Database::executeS('INSERT INTO db_employee values(null, "'.$_POST['cs'].'","'.$_POST['pass'].'","'.$rm.'","2","0")');
+		    move_uploaded_file($tmp, IMG_DIR.'users/'.$rm);
+	    }
 		Redirect::to($_SERVER['HTTP_REFERER']);
 	}
 
