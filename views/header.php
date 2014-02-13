@@ -21,6 +21,7 @@ if(Session::get('not-login') != null) {
   }
   ?>
   <script type="text/javascript" src="<?=URL?>resources/js/jquery.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
   <script type="text/javascript" src="<?=URL?>resources/js/bootstrap.js"></script>
   <script type="text/javascript" src="<?=URL?>resources/js/jquery-rotate.js"></script>
 	<script type="text/javascript" src="<?=URL?>resources/js/custom.js"></script>

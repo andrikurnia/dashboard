@@ -26,8 +26,11 @@ class order extends Controller {
 		$data = $this->_getWeb();
 		foreach ($data as $key) {
 			Database::setDb($key['server_db'], $key['username'], $key['passwd'], $key['db_name']);
-			$sql = Database::executeS('SELECT o.id_order, o.reference, c.firstname, c.lastname, c.id_gender, o.id_currency, o.total_paid 
-					FROM ps_orders o INNER JOIN ps_customer c ON o.id_customer = c.id_customer ORDER BY o.id_order DESC');
+			$sql = Database::executeS('SELECT o.id_order, o.reference, c.firstname, c.lastname, c.id_gender, cur.sign, o.total_paid 
+					FROM ps_orders o 
+					INNER JOIN ps_customer c ON o.id_customer = c.id_customer 
+					LEFT JOIN ps_currency cur ON cur.id_currency = o.id_currency
+					ORDER BY o.id_order DESC');
 			
 			$this->view->return .= '
 			<h3>'.$key['web'].'</h3>
@@ -42,14 +45,14 @@ class order extends Controller {
 			';
 
 			foreach ($sql as $val) {
-				$cur = ($val['id_currency'] == 1) ? '$' : 'Rp';
+				#$cur = ($val['id_currency'] == 1) ? '$' : 'Rp';
 				$price = explode('.', $val['total_paid']);
 				$this->view->return .= '
 				<tr data-order="'. $val['id_order'] .'" class="data-order">
 					<td>'. $val['id_order'] .'</td>
 					<td>'. $val['reference'] .'</td>
 					<td>'. $val['firstname'] .' '. $val['lastname'].'</td>
-					<td>'.$cur.' '. $price[0] .'</td>
+					<td>'. str_replace('?',' ',$val['sign']) .''. $price[0] .'</td>
 					<td>
 						<a href="'.URL.'order/view/'. $key['id_web'] .'/'. $val['id_order'] .'" style="color:#333">
 						<span class="glyphicon glyphicon-file"></span>

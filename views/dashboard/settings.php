@@ -92,13 +92,27 @@
 			  	  		<td>'. $show['id_email'] .'</td>
 			  	  		<td>'. $show['email'] .'</td>
 			  	  		<td>'. $show['host'] .'</td>
-			  	  		<td width="50px">
-			  	  				<span class="glyphicon glyphicon-edit pointer" data-id="'.$show['id_email'].'"></span>
-			  	  		</td>
-			  	  		<td width="50px">
-			  	  			<a href="'.URL.'process/del/email/id_email/'.$show['id_email'].'" style="color:#FF4136">
-			  	  				<span class="glyphicon glyphicon-remove"></span>
-			  	  			</a>
+			  	  		<td>
+			  	  		<div class="btn-group">
+			  	  			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+			  	  				<span class="glyphicon glyphicon-cog"></span>
+			  	  			</button>
+			  	  			<ul class="dropdown-menu" role="menu">
+			  	  				<li>
+			  	  					<a href="#" class="edit">
+			  	  						<span class="glyphicon glyphicon-edit pointer" data-id="'.$show['id_email'].'"></span>
+			  	  						Edit
+			  	  					</a>
+			  	  				</li>
+			  	  				<li class="divider"></li>
+			  	  				<li>
+			  	  					<a href="'.URL.'process/del/email/id_email/'.$show['id_email'].'">
+			  	  						<span class="glyphicon glyphicon-remove"></span>
+			  	  						Delete
+			  	  					</a>
+			  	  				</li>
+							</ul>
+						</div>
 			  	  		</td>
 			  	  	</tr>
 			  	  	';
@@ -175,6 +189,7 @@
 						<th width="25%">CMS</th>
 						<th width="20%">Server DB</th>
 						<th width="20%">Nama DB</th>
+						<th></th>
 					</tr>
 					<?php
 					foreach ($paging->create() as $key) {
@@ -184,6 +199,28 @@
 						<td>'.$key['cms'].'</td>
 						<td>'.$key['server_db'].'</td>
 						<td>'.$key['db_name'].'</td>
+						<td>
+						<div class="btn-group">
+			  	  			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+			  	  				<span class="glyphicon glyphicon-cog"></span>
+			  	  			</button>
+			  	  			<ul class="dropdown-menu" role="menu">
+			  	  				<li>
+			  	  					<a href="#" class="edit">
+			  	  						<span class="glyphicon glyphicon-edit pointer" data-id="'.$key['id_web'].'"></span>
+			  	  						Edit
+			  	  					</a>
+			  	  				</li>
+			  	  				<li class="divider"></li>
+			  	  				<li>
+			  	  					<a href="'.URL.'process/del/website/id_web/'.$key['id_web'].'">
+			  	  						<span class="glyphicon glyphicon-remove"></span>
+			  	  						Delete
+			  	  					</a>
+			  	  				</li>
+							</ul>
+						</div>
+						</td>
 					</tr>
 					';
 					}
@@ -250,7 +287,9 @@
 					<button class="btn btn-warning btn-sm no-radius" id="cancel" style="display:none;">Cancel</button>
 				</div>
 
-				<div id="edit"></div>
+				<div id="edit">
+				    
+				</div>
 				<?php
 				$paging->name('host');
 				$paging->set('db_host');
@@ -272,13 +311,27 @@
 				  	  	<td>'.$show['id_host'].'</td>
 				  	  	<td>'.$show['hostname'].'</td>
 				  	  	<td>'.$show['host'].'</td>
-				  	  	<td width="50px">
-				  	  		<span class="glyphicon glyphicon-edit pointer" data-id="'.$show['id_host'].'"></span>
-				  	  	</td>
-				  	  	<td width="50px">
-				  	  		<a href="'.URL.'process/del/host/id_host/'.$show['id_host'].'" style="color:#FF4136">
-				  	  			<span class="glyphicon glyphicon-remove"></span>
-				  	  		</a>
+				  	  	<td>
+						<div class="btn-group">
+			  	  			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+			  	  				<span class="glyphicon glyphicon-cog"></span>
+			  	  			</button>
+			  	  			<ul class="dropdown-menu" role="menu">
+			  	  				<li>
+			  	  					<a href="#" class="edit">
+			  	  						<span class="glyphicon glyphicon-edit pointer" data-id="'.$show['id_host'].'"></span>
+			  	  						Edit
+			  	  					</a>
+			  	  				</li>
+			  	  				<li class="divider"></li>
+			  	  				<li>
+			  	  					<a href="'.URL.'process/del/host/id_host/'.$show['id_host'].'">
+			  	  						<span class="glyphicon glyphicon-remove"></span>
+			  	  						Delete
+			  	  					</a>
+			  	  				</li>
+							</ul>
+						</div>
 				  	  	</td>
 				  	  </tr>	
 			  	  	';
@@ -287,13 +340,41 @@
 			  	</table>
 			  	<?=$paging->show();?>
 			</div>
+			
+			<!-- ADD MODAL -->
+			<div class="modal fade" id="add" tabindex="-1" role="dialog">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel">Tambah Host</h4>
+			      </div>
+			      <form role="form" class="form-horizontal" method="post" action="<?=URL.'process/addHost'?>">
+				      <div class="modal-body">
+				      	<div class="form-group">
+				      		<label class="col-sm-3 control-label">Hostname</label>
+				      		<div class="col-sm-9">
+				      			<input type="text" name="hostname" class="form-control input-sm" placeholder="Gmail">
+				      		</div>
+				      	</div>
+				      	<div class="form-group">
+				      		<label class="col-sm-3 control-label">Host</label>
+				      		<div class="col-sm-9">
+				      			<input type="text" name="host" class="form-control input-sm" placeholder="imap.gmail.com" required>
+				      		</div>
+				      	</div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				        <button type="submit" class="btn btn-primary">Submit</button>
+				      </div>
+			      </form>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			
 			<?php break;
 		case '4':
-		    if(Session::get('conflict-username') != null) {
-		        echo '<div class="alert alert-danger no-radius">
-                	Username <b>'.Session::get('conflict-username').'</b> already in use 
-                </div>';
-		    }
 			?>
 			<div id="cs-setting" class="block">
 				<div class="menu">
@@ -339,7 +420,7 @@
 			  	  	<th width="50px">ID</th>
 			 	  	<th>Customer Service</th>
 			  	  	<th width="">Status</th>
-			  	  	<th colspan="2" width="100px">Action</th>
+			  	  	<th colspan="2" width="50px">Action</th>
 			  	  </tr>
 			  	  <?php
 			  	  if($paging->create()) {
@@ -351,13 +432,27 @@
 					  	  	<td>'.$key['id_employee'].'</td>
 					  	  	<td>'.$key['username'].'</td>
 					  	  	<td><span class="pointer status '.$s.'" data-user="'.$key['id_employee'].'" data-status="'.$key['active'].'">'.$s.'</span></td>
-					  	  	<td width="50px">
-					  	  		<span class="glyphicon glyphicon-edit pointer" data-id="'.$key['id_employee'].'"></span>
-					  	  	</td>
-					  	  	<td width="50px">
-					  	  		<a href="'.URL.'process/del/employee/id_employee/'.$key['id_employee'].'" style="color:#FF4136">
-					  	  			<span class="glyphicon glyphicon-remove"></span>
-					  	  		</a>
+					  	  	<td>
+					  	  	<div class="btn-group">
+				  	  			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+				  	  				<span class="glyphicon glyphicon-cog"></span>
+				  	  			</button>
+				  	  			<ul class="dropdown-menu" role="menu">
+				  	  				<li>
+				  	  					<a href="#" class="edit">
+				  	  						<span class="glyphicon glyphicon-edit pointer" data-id="'.$key['id_employee'].'"></span>
+				  	  						Edit
+				  	  					</a>
+				  	  				</li>
+				  	  				<li class="divider"></li>
+				  	  				<li>
+				  	  					<a href="'.URL.'process/del/employee/id_employee/'.$key['id_employee'].'">
+				  	  						<span class="glyphicon glyphicon-remove"></span>
+				  	  						Delete
+				  	  					</a>
+				  	  				</li>
+								</ul>
+							</div>
 					  	  	</td>
 				  	  	</tr>
 				  	  	';

@@ -51,10 +51,14 @@ class process extends Controller
 	    }
 		Redirect::to($_SERVER['HTTP_REFERER']);
 	}
-
+    
 	function stat($id) {
 		$id = !$id;
 		Database::executeS('UPDATE db_employee SET active = "'.$id.'" WHERE id_employee = "'.$_POST['id'].'"');
+	}
+	
+	function addHost() {
+	    
 	}
 
 	function addWeb() {
