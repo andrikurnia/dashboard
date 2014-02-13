@@ -58,9 +58,17 @@ class process extends Controller
 	}
 	
 	function addHost() {
-	    
+	    Database::executeS('INSERT INTO db_host values(null,
+	        "'.$_POST['host'].'",
+	        "'.$_POST['hostname'].'")');
+	    Redirect::to($_SERVER['HTTP_REFERER']);
 	}
-
+    
+    function editHost($id) {
+        Database::executes('UPDATE db_host SET host = "'.$_POST['host'].'", hostname = "'.$_POST['hostname'].'" WHERE id_host = "'.$id.'"');
+        Redirect::to($_SERVER['HTTP_REFERER']);
+    }
+    
 	function addWeb() {
 		Database::executeS('INSERT INTO db_website values(null,
 			"'. $_POST['web'] .'","1",

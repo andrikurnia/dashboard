@@ -12,7 +12,7 @@
 <div class="well well-sm no-radius">
 	<div class="col-md-2">
 		<select name="host" class="form-control input-sm" data-toggle="tooltip" data-placement="top" title="Host">
-			<option value='0'>-- Host --</option>
+			<option value='0'>All</option>
 			<?php
 			$host = Database::executeS('SELECT * FROM db_host');
 			foreach ($host as $key) {
@@ -23,6 +23,10 @@
 			}
 			?>
 		</select>
+	</div>
+	<div class="col-md-4 pull-right">
+	    <input type="search" name="search_email" class="form-control input-sm" placeholder="Search Email ...">
+	    
 	</div>
 	<div class="clear"></div>
 </div>

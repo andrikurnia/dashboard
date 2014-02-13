@@ -86,12 +86,13 @@
 			  	  </tr>
 			  	  <?php
 			  	  foreach ($paging->create() as $show) {
+			  	    $host = empty($show['hostname']) ? $show['host'] : $show['hostname'];    
 			  	  	echo '
 			  	  	<tr>
 			  	  		<td><input type="checkbox" name="checkemail"></td>
 			  	  		<td>'. $show['id_email'] .'</td>
 			  	  		<td>'. $show['email'] .'</td>
-			  	  		<td>'. $show['host'] .'</td>
+			  	  		<td>'. $host .'</td>
 			  	  		<td>
 			  	  		<div class="btn-group">
 			  	  			<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -288,8 +289,33 @@
 				</div>
 
 				<div id="edit">
-				    
+				<?php
+				$id = isset($_POST['edit-id']) ? $_POST['edit-id'] : null;
+				if (isset($id)) {
+					$edit = Database::executeS('SELECT * FROM db_host WHERE id_host = "'.$id.'"');
+					?>
+						<form role="form" class="form-horizontal" method="post" action="<?=URL.'process/editHost/'.$id;?>">
+						    <div class="modal-body">
+						    	<div class="form-group">
+						      		<label class="col-sm-2 control-label">Hostname</label>
+						      		<div class="col-sm-10">
+						      			<input type="text" name="hostname" class="form-control input-sm" value="<?=$edit[0]['hostname']?>">
+						      		</div>
+						      	</div>
+						      	<div class="form-group">
+						      		<label class="col-sm-2 control-label">Host</label>
+						      		<div class="col-sm-10">
+						      			<input type="text" name="host" class="form-control input-sm" value="<?=$edit[0]['host']?>">
+						      		</div>
+						      	</div>
+						    </div>
+						    <div class="modal-footer">
+						      <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+						    </div>
+					    </form>
+				<?php }	?>
 				</div>
+				
 				<?php
 				$paging->name('host');
 				$paging->set('db_host');

@@ -22,6 +22,13 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	$("[name='search_email']").keyup(function(e) {
+	    var enter = e.which;
+	    if(enter == 13) {
+	        console.log($(this).val());
+	    }
+	});
 
 	$('#settings-content').hide();
 	$('#settings-content').fadeIn();
