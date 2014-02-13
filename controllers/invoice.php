@@ -44,8 +44,9 @@ class Invoice extends Controller
 			$jt = date('d m Y', strtotime("+14 Days"));
 			$m = $ldate->get_month(substr($jt, 3, 2));
 			$jt = str_replace(substr($jt, 3, 2), $m, $jt);
-
-			$name = 'resources/file/'.$data['website'].'_'.$data['id_order'].'_'.$date.'.pdf';
+    
+            $tmp_name = str_replace(' ','_',$data['website'].'_'.$data['id_order'].'_'.$date);
+			$name = 'resources/file/'.$tmp_name.'.pdf';
 
 			// GET ID INVOICE
 			Database::executeS('INSERT INTO db_invoice VALUES(null,"'.$data['id_website'].'","'.$data['id_order'].'",null,"'.$_POST['status'].'")');
@@ -132,9 +133,19 @@ class Invoice extends Controller
 		} else { return false;}
 	}
     
-    function readinvoice() {
-		$file = 'resources/file/Just One_1_1392269773.pdf';
-		$filename = 'Just One_1_1392269773.pdf';
+    function readinvoice($name) {
+        // echo $name;
+		$file = "resources/file/".$name;
+		$filename = $name;
+		
+// 		if(file_exists($file)) {
+// 		    echo 'ada';
+// 		} else {
+// 		    echo 'nothing';
+// 		}
+		
+// 		echo $file;
+// 		echo '<br>'.$filename;
 
 
 		    header('Content-type: application/pdf');
